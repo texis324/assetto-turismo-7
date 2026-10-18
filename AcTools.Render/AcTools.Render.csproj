@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AcTools.Render</RootNamespace>
     <AssemblyName>AcTools.Render</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
     <ActualPlatform>$(Platform)</ActualPlatform>
@@ -180,6 +180,7 @@
     <Compile Include="Base\Utils\ThreadPool.cs" />
     <Compile Include="Data\CarData.cs" />
     <Compile Include="Kn5SpecificForwardDark\DarkKn5ObjectRenderer.cs" />
+    <Compile Include="Kn5SpecificForwardDark\DarkKn5ObjectRenderer.BrandStrip.cs" />
     <Compile Include="Kn5SpecificForwardDark\DarkPreviewsUpdater.cs" />
     <Compile Include="Base\Objects\DebugLinesObject.cs" />
     <Compile Include="Kn5SpecificForwardDark\FlatMirror.cs" />

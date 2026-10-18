@@ -10,6 +10,10 @@ using SlimDX;
 
 namespace AcTools.Render.Kn5Specific.Objects {
     public partial class Kn5RenderableCar {
+        // [fork] エンジン音のリスナー距離を縮める倍率（1=素）。CmJaOverlay のガレージ演出がリフレクションで設定。
+        //        音の位置はビュー空間（リスナー=原点）で渡すので、これを掛けるとカメラが遠くても音が近くで鳴る
+        public static float SoundDistanceScale = 1f;
+
         [CanBeNull]
         private IAcCarSound _sound;
 
@@ -178,7 +182,7 @@ namespace AcTools.Render.Kn5Specific.Objects {
                 if (_lastMatrix == matrix) return;
                 _lastMatrix = matrix;
 
-                var position = Vector3.TransformCoordinate(_position, matrix);
+                var position = Vector3.TransformCoordinate(_position, matrix) * SoundDistanceScale;   // [fork]
                 var direction = Vector3.TransformNormal(_direction, matrix);
                 var up = Vector3.TransformNormal(_up, matrix);
 

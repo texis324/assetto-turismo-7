@@ -85,8 +85,9 @@ namespace AcManager {
                 ApplicationDataDirectory = Path.GetFullPath(data);
             } else {
                 var exe = Assembly.GetEntryAssembly()?.Location;
-                ApplicationDataDirectory = Path.GetFileName(exe)?.IndexOf("local", StringComparison.OrdinalIgnoreCase) != -1
-                        ? Path.Combine(Path.GetDirectoryName(exe) ?? Path.GetFullPath("."), "Data")
+                var portableData = Path.Combine(Path.GetDirectoryName(exe) ?? Path.GetFullPath("."), "Data"); // [fork] exe隣にDataがあればポータブル扱い
+                ApplicationDataDirectory = Path.GetFileName(exe)?.IndexOf("local", StringComparison.OrdinalIgnoreCase) != -1 || Directory.Exists(portableData)
+                        ? portableData
                         : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "AcTools Content Manager");
             }
 
@@ -103,9 +104,17 @@ namespace AcManager {
             var logFilename = AppArguments.GetBool(AppFlag.LogPacked) ? GetLogName("Packed Log") : null;
             AppArguments.Set(AppFlag.DirectAssembliesLoading, ref PackedHelper.OptionDirectLoading);
 
-            var packedHelper = new PackedHelper("AcTools_ContentManager", "References", logFilename);
-            packedHelper.PrepareUnmanaged("LevelDB");
-            AppDomain.CurrentDomain.AssemblyResolve += packedHelper.Handler;
+            // [fork] ルーズビルドの exe には References.resources が埋め込まれていない。
+            //        その状態で PackedHelper.Handler を登録すると、プラグイン系アセンブリ(FMOD の
+            //        AcTools.SoundbankPlayer 等)の解決時に MissingManifestResourceException を投げて
+            //        後続のプラグインリゾルバまで届かず、ショールームの車サウンドが死ぬ。
+            //        埋め込みがあるパック版ビルドの時だけ登録する。
+            var resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            if (Array.IndexOf(resourceNames, "References.resources") >= 0) {
+                var packedHelper = new PackedHelper("AcTools_ContentManager", "References", logFilename);
+                packedHelper.PrepareUnmanaged("LevelDB");
+                AppDomain.CurrentDomain.AssemblyResolve += packedHelper.Handler;
+            }
 #endif
 
             MainInner(a);

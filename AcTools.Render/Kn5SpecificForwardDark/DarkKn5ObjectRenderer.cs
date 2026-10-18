@@ -1218,6 +1218,7 @@ namespace AcTools.Render.Kn5SpecificForwardDark {
             } else {
                 DrawDof();
             }
+            ApplyBrandStripBlur();
         }
 
         private bool _setCameraHigher = true;
@@ -1235,6 +1236,7 @@ namespace AcTools.Render.Kn5SpecificForwardDark {
         protected override Vector3 AutoAdjustedTarget => base.AutoAdjustedTarget + Vector3.UnitY * (SetCameraHigher ? 0f : 0.2f);
 
         protected override void DisposeOverride() {
+            DisposeBrandStripBlur();
             DisposeHelper.Dispose(ref _customReflectionsLastMaterial);
             DisposeHelper.Dispose(ref _sslr);
             DisposeHelper.Dispose(ref _dof);

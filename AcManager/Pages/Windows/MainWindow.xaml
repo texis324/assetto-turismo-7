@@ -2,10 +2,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:w="clr-namespace:AcManager.Pages.Windows" xmlns:g="clr-namespace:AcManager" xmlns:t="http://acstuff.club/app/tools"
+    xmlns:gt="clr-namespace:AcManager.Pages.Gt"
     xmlns:c="http://acstuff.club/app/controls" xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:dialogs="clr-namespace:AcManager.Pages.Dialogs"
     mc:Ignorable="d" Title="{x:Static g:AppStrings.Main_Title}" IsTitleVisible="False" MinWidth="800" MinHeight="640" Width="960" Height="800"
     AllowsTransparency="False" FocusVisualStyle="{x:Null}" AllowDrop="True" Drop="OnDrop" DragEnter="OnDragEnter"
-    DefaultContentSource="/Pages/Drive/QuickDrive.xaml" Loaded="OnLoaded" Unloaded="OnUnloaded" Closing="OnClosing" Closed="OnClosed"
+    DefaultContentSource="{x:Static gt:TitleScreen.StartupPageUri}" Loaded="OnLoaded" Unloaded="OnUnloaded" Closing="OnClosing" Closed="OnClosed"
     MouseRightButtonUp="OnMouseRightButtonDown" MouseDown="OnMouseUp" PreviewMouseRightButtonUp="OnPreviewMouseRightButtonUp"
     PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown" KeyDown="OnKeyDown" FrameNavigating="OnFrameNavigating"
     mui:ModernMenu.Initialize="OnMainMenuInitialize" mui:ModernMenu.SelectedChange="OnMainMenuSelectedChange"
@@ -539,6 +540,12 @@
   </mui:ModernWindow.TitleButtons>
 
   <mui:ModernWindow.MenuLinkGroups>
+    <!-- [fork] GT7 風ワールドマップ -->
+    <mui:LinkGroup GroupKey="home" DisplayName="ワールドマップ">
+      <mui:LinkGroup.Links>
+        <mui:Link DisplayName="マップ" Source="/Pages/Gt/WorldMap.xaml" />
+      </mui:LinkGroup.Links>
+    </mui:LinkGroup>
     <!-- ReSharper disable Xaml.PathError -->
 
     <!-- Drive -->
@@ -721,6 +728,7 @@
   </mui:ModernWindow.MenuLinkGroups>
 
   <mui:ModernWindow.TitleLinks>
+    <mui:TitleLink DisplayName="ワールドマップ" GroupKey="home" Source="/Pages/Gt/WorldMap.xaml" />
     <mui:TitleLink GroupKey="drive" Source="/Pages/Drive/QuickDrive.xaml">
       <TextBlock Text="{Binding Source={x:Static g:AppStrings.Main_Drive}, Converter={StaticResource ToUpperConverter}}" Drop="OnDriveTitleLinkDrop"
           AllowDrop="True" mui:FancyHintsService.Hint="{Binding Id, Source={x:Static c:FancyHints.DragForContentSection}}"

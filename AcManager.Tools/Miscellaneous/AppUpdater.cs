@@ -28,6 +28,9 @@ using Keyboard = System.Windows.Input.Keyboard;
 
 namespace AcManager.Tools.Miscellaneous {
     public class AppUpdater : BaseUpdater {
+        // [fork] 本家の自動更新で自前ビルドが上書きされるのを防ぐ（既定OFF）
+        public static bool OptionAutoUpdateEnabled = false;
+
         public static void OnFirstRun() {
             ValuesStorage.Set(KeyPreviousVersion, BuildInformation.AppVersion);
         }
@@ -84,6 +87,7 @@ namespace AcManager.Tools.Miscellaneous {
         }
 
         public override Task CheckAndUpdateIfNeeded() {
+            if (!OptionAutoUpdateEnabled) return Task.FromResult(false); // [fork]
 #if !FORCE_UPDATE
             if (!MainExecutingFile.IsPacked) {
                 LatestError = ToolsStrings.AppUpdater_UnpackedVersionMessage;

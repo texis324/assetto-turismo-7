@@ -119,6 +119,10 @@ namespace AcManager.Pages.Windows {
 
             _cancelled = false;
 
+            // [fork] オープニングは HWND ができた瞬間（最初の描画より前）に被せる＝ワールドマップが一瞬見えない
+            //   （要望 2026-09-12「起動時に一瞬だけワールドマップが表示される」）。OnLoadedOverride の呼び出しは保険（2 回目は何もしない）
+            SourceInitialized += (s, e) => { if (_navigateOnOpen == null) Gt.GtOpening.ShowAtStartup(this); };
+
             /*if (_testGameDialog != null) {
                 Logging.Write("Testing mode");
                 var ui = new GameDialog();
@@ -291,10 +295,19 @@ namespace AcManager.Pages.Windows {
         }
 
         protected override void OnLoadedOverride() {
+            Title = "CM7";   // [fork] フォークの名前=CM7（要望命名 2026-08-25）。XAMLのTitle適用と日本語化辞書の後に上書き
+            Gt.GtTestChannel.Start();   // [fork] テストチャンネル(フラグファイルがある時だけ有効)
+            Gt.GtIdleSlides.Start();    // [fork] GT7同様、放置すると車の歴史スライド
             if (_navigateOnOpen != null) {
                 NavigateTo(_navigateOnOpen);
                 this.FindVisualChild<ModernMenu>()?.SkipLoading();
                 _navigateOnOpen = null;
+            } else {
+                // [fork] 通常起動は表示設定に従う（前回ページの復元より優先。SkipLoading で復元を止める）
+                NavigateTo(Gt.TitleScreen.StartupPageUri);
+                this.FindVisualChild<ModernMenu>()?.SkipLoading();
+                // [fork] GT7 と同じく起動時にオープニングムービー（設定でオン/オフ・何かキーでスキップ）。窓が描けてから被せる
+                Dispatcher.BeginInvoke(new Action(() => Gt.GtOpening.ShowAtStartup(this)), System.Windows.Threading.DispatcherPriority.Loaded);
             }
 
             // SettingsShadersPatch.GetShowSettingsCommand().Execute(null);
@@ -629,6 +642,7 @@ namespace AcManager.Pages.Windows {
         private void OnLoaded(object sender, RoutedEventArgs e) {
             if (_loaded) return;
             _loaded = true;
+            Gt.GtBorderless.Apply(this);   // [fork] GT7 ボーダーレス全画面（F11 でトグル）
 
             AboutHelper.Instance.PropertyChanged += OnAboutPropertyChanged;
             UpdateAboutIsNew();
@@ -858,6 +872,12 @@ namespace AcManager.Pages.Windows {
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e) {
+            // [fork] F11 = GT7 ボーダーレス全画面 ⇔ 通常ウィンドウ（下の QuickSwitches の早期 return より前に置く）
+            if (e.Key == Key.F11 && Keyboard.Modifiers == ModifierKeys.None) {
+                Gt.GtBorderless.Toggle(this);
+                e.Handled = true;
+                return;
+            }
             if (Keyboard.Modifiers != ModifierKeys.Alt && Keyboard.Modifiers != (ModifierKeys.Alt | ModifierKeys.Shift) ||
                     !SettingsHolder.Drive.QuickSwitches || VisualExtension.IsInputFocused()) return;
 

@@ -1,0 +1,141 @@
+<UserControl x:Class="AcManager.Pages.Gt.SettingSheet" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:gt="clr-namespace:AcManager.Pages.Gt"
+    mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="900"
+    Focusable="True" KeyDown="OnKeyDown">
+  <UserControl.Resources>
+    <!-- [fork] GT7 セッティングシート実測配色（gt7-ref/car_settings/layout_notes.md より）
+         面 #282830 / 左パネル #16191E→#000 / フィールド #0E1014 / ラベル #8A8A8A / 値 #F0F0F0。枠線は使わず明度差で区切る -->
+    <SolidColorBrush x:Key="GtSheetBg" Color="#282830" />
+    <SolidColorBrush x:Key="GtField" Color="#0E1014" />
+    <SolidColorBrush x:Key="GtLabel" Color="#8A8A8A" />
+    <SolidColorBrush x:Key="GtValue" Color="#F0F0F0" />
+    <SolidColorBrush x:Key="GtHair" Color="#4A4C54" />
+    <SolidColorBrush x:Key="GtPillBg" Color="#3C3F46" />
+    <SolidColorBrush x:Key="GtGreen" Color="#10A050" />
+    <FontFamily x:Key="GtNum">Bahnschrift SemiCondensed, Yu Gothic UI</FontFamily>
+    <FontFamily x:Key="GtBody">Yu Gothic UI, Segoe UI</FontFamily>
+  </UserControl.Resources>
+
+  <Grid Background="#101216">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="0.354*" />
+      <ColumnDefinition Width="0.646*" />
+    </Grid.ColumnDefinitions>
+
+    <!-- GT7共通ヘッダーバー -->
+    <gt:GtHeader x:Name="Header" Grid.Row="0" Grid.ColumnSpan="2" />
+
+    <!-- ══ 左パネル: 車情報＋基本性能＋シート一覧（GT7左パネル構造） ══ -->
+    <Border Grid.Row="1" Grid.Column="0">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#16191E" Offset="0" />
+          <GradientStop Color="#000000" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+      <DockPanel Margin="34 26 26 18">
+        <!-- 車ヘッダー -->
+        <Grid DockPanel.Dock="Top">
+          <StackPanel Orientation="Horizontal">
+            <Image x:Name="BrandBadgeImg" Width="30" Height="30" VerticalAlignment="Center" Margin="0 0 10 0" />
+            <TextBlock x:Name="LeftBrand" FontSize="13" Foreground="{StaticResource GtValue}" VerticalAlignment="Center" />
+          </StackPanel>
+          <TextBlock Text="カーセッティング" FontSize="12" Foreground="{StaticResource GtLabel}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+        </Grid>
+        <TextBlock x:Name="LeftCarName" DockPanel.Dock="Top" FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource GtValue}"
+            TextWrapping="Wrap" Margin="0 12 0 0" />
+
+        <!-- 基本性能（GT7見出し様式=中央寄せ＋左右ヘアライン） -->
+        <Grid DockPanel.Dock="Top" Margin="0 18 0 8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="1" Fill="{StaticResource GtHair}" VerticalAlignment="Center" Opacity="0.6" />
+          <TextBlock Grid.Column="1" Text="基本性能" FontSize="11.5" Foreground="{StaticResource GtLabel}" Margin="12 0 12 0" />
+          <Rectangle Grid.Column="2" Height="1" Fill="{StaticResource GtHair}" VerticalAlignment="Center" Opacity="0.6" />
+        </Grid>
+        <StackPanel x:Name="LeftSpecPanel" DockPanel.Dock="Top" />
+
+        <!-- シート一覧 -->
+        <Grid DockPanel.Dock="Top" Margin="0 22 0 8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="1" Fill="{StaticResource GtHair}" VerticalAlignment="Center" Opacity="0.6" />
+          <TextBlock Grid.Column="1" Text="セッティングシート" FontSize="11.5" Foreground="{StaticResource GtLabel}" Margin="12 0 12 0" />
+          <Rectangle Grid.Column="2" Height="1" Fill="{StaticResource GtHair}" VerticalAlignment="Center" Opacity="0.6" />
+        </Grid>
+        <TextBlock x:Name="NoSetups" DockPanel.Dock="Top" Text="保存されたセットアップがありません。&#10;AC のピット画面でセットアップを保存すると、ここに並びます。"
+            FontSize="12" Foreground="{StaticResource GtLabel}" TextWrapping="Wrap" Margin="0 6 0 6" Visibility="Collapsed" />
+        <ListBox x:Name="SetupList" Background="Transparent" BorderThickness="0" SelectionChanged="OnSetupSelected"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="ListBoxItem">
+                    <!-- GT7流: フォーカス/選択は白い1px枠 -->
+                    <Border x:Name="Bd" Background="#14161B" Margin="0 3 0 3" Padding="14 8 12 9" CornerRadius="3"
+                        BorderThickness="1" BorderBrush="Transparent">
+                      <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsSelected" Value="True">
+                        <Setter TargetName="Bd" Property="BorderBrush" Value="#F0F0F0" />
+                        <Setter TargetName="Bd" Property="Background" Value="#1B1E25" />
+                      </Trigger>
+                      <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Bd" Property="Background" Value="#1B1E25" />
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </ListBox.ItemContainerStyle>
+        </ListBox>
+      </DockPanel>
+    </Border>
+
+    <!-- ══ 右: セッティング面 ══ -->
+    <Border Grid.Row="1" Grid.Column="1" Background="{StaticResource GtSheetBg}">
+      <DockPanel>
+        <!-- シート名ピル（中央） -->
+        <Grid DockPanel.Dock="Top" Margin="0 18 0 4">
+          <Border x:Name="SheetPill" HorizontalAlignment="Center" Background="{StaticResource GtPillBg}" CornerRadius="15"
+              Padding="38 6 38 7" Visibility="Collapsed">
+            <TextBlock x:Name="SheetPillText" FontSize="13.5" Foreground="{StaticResource GtValue}" />
+          </Border>
+        </Grid>
+        <!-- フッター -->
+        <Grid DockPanel.Dock="Bottom" Margin="44 10 44 18">
+          <!-- [fork] パッド操作中は ○ 表記へ（コンストラクタで GtHints.Bind） -->
+          <TextBlock x:Name="HintBack" Text="Esc  戻る" FontSize="12" Foreground="{StaticResource GtLabel}" VerticalAlignment="Center" />
+          <Button x:Name="SaveButton" Content="保存" Click="OnSaveClick" HorizontalAlignment="Right" Padding="44 8 44 9"
+              FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" Visibility="Collapsed">
+            <Button.Template>
+              <ControlTemplate TargetType="Button">
+                <Border x:Name="Bd" CornerRadius="16" Background="{StaticResource GtGreen}" Padding="{TemplateBinding Padding}">
+                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="Bd" Property="Background" Value="#14B85E" />
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel x:Name="SheetPanel" Margin="44 8 44 20" MaxWidth="760" />
+        </ScrollViewer>
+      </DockPanel>
+    </Border>
+  </Grid>
+</UserControl>

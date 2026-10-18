@@ -885,6 +885,10 @@ namespace AcManager {
         }
 
         private static void RevertFileChanges() {
+            // These journals contain values captured after presets were applied. Restore them first.
+            // Failure must stop the preset restorers, preserving their backups for a later retry.
+            AcManager.Pages.Gt.GtDrivingInput.RecoverBeforePresets();
+            AcManager.Pages.Gt.GtDisplayMode.RecoverBeforePresets();
             PresetsPerModeBackup.Revert();
             WeatherSpecificCloudsHelper.Revert();
             WeatherSpecificTyreSmokeHelper.Revert();
@@ -894,6 +898,7 @@ namespace AcManager {
             CarSpecificFanatecSettingsHelper.Revert();
             CarCustomDataHelper.Revert();
             CarExtendedPhysicsHelper.Revert();
+            AcManager.Pages.Gt.GtTuning.RestoreAll();   // [fork] チューニングショップの data.acd 退避を戻す（前回クラッシュ対策）
             CopyFilterToSystemForOculusHelper.Revert();
             AcShadowsPatcher.Revert();
         }

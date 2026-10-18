@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FirstFloor.ModernUI.Win8Extension</RootNamespace>
     <AssemblyName>FirstFloor.ModernUI.Win8Extension</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>

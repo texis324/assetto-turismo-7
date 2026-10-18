@@ -83,3 +83,11 @@ AcManager/Assets/Icons/Source/*-256.png
 IgnoreVersionFiles.bat
 *tmp.csproj
 .vscode/*
+
+# [fork] local backups
+*.bak_*
+*.bak
+*.orig-bak
+*.old*
+*.before
+

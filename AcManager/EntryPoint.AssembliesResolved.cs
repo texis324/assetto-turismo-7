@@ -50,7 +50,7 @@ namespace AcManager {
             }
 
             var appGuid = ((GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true).GetValue(0)).Value;
-            var mutexId = $@"Global\{{{appGuid}}}";
+            var mutexId = $@"Global\{{{appGuid}}}-fork"; // [fork] 配布版と同時に起動できるよう識別子を分ける
 
             if (Array.IndexOf(args, WindowsHelper.RestartArg) != -1) {
                 for (var i = 0; i < 999; i++) {

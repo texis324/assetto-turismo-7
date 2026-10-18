@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="AcManager.Pages.Gt.WorldCircuits" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+    xmlns:gt="clr-namespace:AcManager.Pages.Gt"
+    mc:Ignorable="d" Loaded="OnLoaded" Unloaded="OnUnloaded" FocusVisualStyle="{x:Null}" Focusable="True" PreviewKeyDown="OnPreviewKeyDown"
+    FontFamily="Yu Gothic UI, Segoe UI">
+  <UserControl.Resources>
+    <SolidColorBrush x:Key="GtGold" Color="#D4B474" />
+    <SolidColorBrush x:Key="GtIvory" Color="#E8E6E1" />
+    <FontFamily x:Key="GtHead">Bahnschrift Light SemiCondensed, Yu Gothic UI Light</FontFamily>
+    <FontFamily x:Key="GtNum">Bahnschrift SemiCondensed, Yu Gothic UI</FontFamily>
+    <DropShadowEffect x:Key="GtTextShadow" BlurRadius="8" ShadowDepth="1" Opacity="0.9" Color="#000000" />
+  </UserControl.Resources>
+
+  <DockPanel>
+  <gt:GtHeader DockPanel.Dock="Top" />
+  <Grid x:Name="Root" Background="#0B1527" ClipToBounds="True">
+    <!-- 背景: 地球儀 -->
+    <Image x:Name="GlobeImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+    <Rectangle IsHitTestVisible="False">
+      <Rectangle.Fill>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#600B1527" Offset="0" />
+          <GradientStop Color="#000B1527" Offset="0.35" />
+          <GradientStop Color="#000B1527" Offset="0.7" />
+          <GradientStop Color="#900B1527" Offset="1" />
+        </LinearGradientBrush>
+      </Rectangle.Fill>
+    </Rectangle>
+
+    <!-- 見出し -->
+    <TextBlock Text="WORLD  CIRCUITS" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 40 0 0" FontFamily="{StaticResource GtHead}"
+        FontSize="46" Foreground="#F4F6F8" Effect="{StaticResource GtTextShadow}" IsHitTestVisible="False" />
+
+    <!-- 3つの地域ダイヤル（コードで生成） -->
+    <StackPanel x:Name="Dials" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -40 0 0" />
+
+    <!-- ホバー中の地域の「走行可能サーキット」 -->
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 118" IsHitTestVisible="False">
+      <TextBlock Text="走行可能サーキット" HorizontalAlignment="Center" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource GtIvory}"
+          Effect="{StaticResource GtTextShadow}" />
+      <TextBlock x:Name="TrackNames" HorizontalAlignment="Center" Margin="0 8 0 0" FontFamily="{StaticResource GtNum}" FontSize="12.5"
+          Foreground="#D9FFFFFF" TextAlignment="Center" MaxWidth="1150" TextWrapping="Wrap" LineHeight="20"
+          Effect="{StaticResource GtTextShadow}" Text="地域を選んでください" />
+    </StackPanel>
+
+    <!-- チャンピオンシップ -->
+    <Border x:Name="ChampionshipButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 56" Background="#E6D7DBDF"
+        CornerRadius="3" Padding="24 7 24 8" Cursor="Hand" MouseLeftButtonUp="OnChampionshipClick">
+      <TextBlock Text="チャンピオンシップ" FontSize="13" FontWeight="SemiBold" Foreground="#22262B" />
+    </Border>
+
+    <!-- 下端バー -->
+    <Border VerticalAlignment="Bottom" Height="48" IsHitTestVisible="False">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#000B1527" Offset="0" />
+          <GradientStop Color="#C00B1527" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+    </Border>
+    <StackPanel x:Name="BottomBar" Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 12" />
+    <!-- [fork] ヒント文字列はコンストラクタで GtHints.Bind する（パッド操作中は ○ 表記に切り替わる） -->
+    <TextBlock x:Name="HintBack" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="32 0 0 18" FontFamily="{StaticResource GtNum}" FontSize="11"
+        Foreground="{StaticResource GtGold}" Opacity="0.8" Effect="{StaticResource GtTextShadow}" Text="Esc  ワールドマップへ戻る" />
+  </Grid>
+  </DockPanel>
+</UserControl>

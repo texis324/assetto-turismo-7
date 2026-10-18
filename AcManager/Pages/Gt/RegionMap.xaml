@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="AcManager.Pages.Gt.RegionMap" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+    xmlns:gt="clr-namespace:AcManager.Pages.Gt"
+    mc:Ignorable="d" Loaded="OnLoaded" Unloaded="OnUnloaded" FocusVisualStyle="{x:Null}" Focusable="True" PreviewKeyDown="OnPreviewKeyDown"
+    FontFamily="Yu Gothic UI, Segoe UI">
+  <UserControl.Resources>
+    <SolidColorBrush x:Key="GtGold" Color="#D4B474" />
+    <SolidColorBrush x:Key="GtIvory" Color="#E8E6E1" />
+    <FontFamily x:Key="GtHead">Bahnschrift Light SemiCondensed, Yu Gothic UI Light</FontFamily>
+    <FontFamily x:Key="GtNum">Bahnschrift SemiCondensed, Yu Gothic UI</FontFamily>
+    <DropShadowEffect x:Key="GtTextShadow" BlurRadius="8" ShadowDepth="1" Opacity="0.9" Color="#000000" />
+  </UserControl.Resources>
+
+  <DockPanel>
+  <gt:GtHeader DockPanel.Dock="Top" />
+  <Grid x:Name="Root" Background="#060E1C" ClipToBounds="True">
+    <!-- 地域の地形図（等距円筒図法の切り出し。ピンは緯度経度→px で置く） -->
+    <Viewbox x:Name="MapBox" Stretch="UniformToFill" StretchDirection="Both" RenderTransformOrigin="0.5,0.5">
+      <Viewbox.RenderTransform>
+        <ScaleTransform x:Name="MapZoom" ScaleX="1.18" ScaleY="1.18" />
+      </Viewbox.RenderTransform>
+      <Canvas x:Name="MapCanvas" Width="2400" Height="1344">
+        <Image x:Name="MapImage" Width="2400" Height="1344" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" />
+      </Canvas>
+    </Viewbox>
+
+    <!-- 上下の暗幕。下は地図の下側のカードを沈めて読みにくくするので、下パネル（選択中のコース）を出している間だけ出す
+         （要望 2026-09-27「下に行くにつれてフェードしてて下側のサーキット名が見にくい」） -->
+    <Rectangle VerticalAlignment="Top" Height="140" IsHitTestVisible="False">
+      <Rectangle.Fill>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#B0060E1C" Offset="0" />
+          <GradientStop Color="#00060E1C" Offset="1" />
+        </LinearGradientBrush>
+      </Rectangle.Fill>
+    </Rectangle>
+    <Rectangle x:Name="BottomShade" VerticalAlignment="Bottom" Height="320" IsHitTestVisible="False" Opacity="0">
+      <Rectangle.Fill>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#00060E1C" Offset="0" />
+          <GradientStop Color="#30060E1C" Offset="0.25" />
+          <GradientStop Color="#90060E1C" Offset="0.55" />
+          <GradientStop Color="#E0060E1C" Offset="0.8" />
+          <GradientStop Color="#F4060E1C" Offset="1" />
+        </LinearGradientBrush>
+      </Rectangle.Fill>
+    </Rectangle>
+
+    <!-- 見出し -->
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 26 0 0" IsHitTestVisible="False">
+      <TextBlock x:Name="RegionTitle" Text="" HorizontalAlignment="Center" FontFamily="{StaticResource GtHead}" FontSize="38"
+          Foreground="{StaticResource GtIvory}" Effect="{StaticResource GtTextShadow}" />
+      <TextBlock x:Name="RegionSub" Text="" HorizontalAlignment="Center" FontFamily="{StaticResource GtNum}" FontSize="12"
+          Foreground="{StaticResource GtGold}" Margin="0 2 0 0" Effect="{StaticResource GtTextShadow}" />
+    </StackPanel>
+
+    <!-- ピンのホバーカード（コードで位置決め） -->
+    <Canvas x:Name="Overlay" IsHitTestVisible="False" />
+
+    <!-- 下部: 選択中コースのパネル -->
+    <Grid x:Name="BottomPanel" VerticalAlignment="Bottom" Margin="40 0 40 58" Opacity="0" IsHitTestVisible="False">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Border Width="190" Height="120" Background="#33FFFFFF" CornerRadius="3" Margin="0 0 24 0">
+        <Image x:Name="OutlineImage" Margin="12" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" />
+      </Border>
+      <StackPanel Grid.Column="1" VerticalAlignment="Center">
+        <DockPanel>
+          <TextBlock Text="🏁" FontFamily="Segoe UI Emoji, Segoe UI Symbol" FontSize="14" Foreground="{StaticResource GtIvory}" Margin="0 0 8 0" VerticalAlignment="Center" />
+          <TextBlock x:Name="SelectedName" Text="" FontFamily="{StaticResource GtHead}" FontSize="28" Foreground="{StaticResource GtIvory}"
+              TextTrimming="CharacterEllipsis" Effect="{StaticResource GtTextShadow}" />
+        </DockPanel>
+        <TextBlock x:Name="SelectedMeta" Text="" FontFamily="{StaticResource GtNum}" FontSize="12" Foreground="{StaticResource GtGold}" Margin="0 2 0 8" />
+        <Rectangle Height="1" Fill="#40FFFFFF" Margin="0 0 0 8" />
+        <WrapPanel x:Name="LayoutChips" Orientation="Horizontal" />
+      </StackPanel>
+    </Grid>
+
+    <!-- 下端バー -->
+    <StackPanel x:Name="BottomBar" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 12" />
+    <!-- [fork] ヒント文字列はコンストラクタで GtHints.Bind する（パッド操作中は ○ 表記に切り替わる） -->
+    <!--     下の暗幕を常時は出さなくなったので、明るい陸の上でも読めるよう文字の後ろに暗い札を敷く（2026-09-27） -->
+    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24 0 0 12" Padding="8 3 8 4" CornerRadius="3" Background="#C00E1014" IsHitTestVisible="False">
+      <TextBlock x:Name="HintBack" FontFamily="{StaticResource GtNum}" FontSize="11"
+          Foreground="{StaticResource GtGold}" Opacity="0.9" Text="Esc  ワールドサーキットへ戻る" />
+    </Border>
+    <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 24 12" Padding="8 3 8 4" CornerRadius="3" Background="#C00E1014" IsHitTestVisible="False">
+      <TextBlock x:Name="HintText" FontFamily="{StaticResource GtNum}" FontSize="11"
+          Foreground="{StaticResource GtGold}" Opacity="0.9" Text="コースをクリック" />
+    </Border>
+  </Grid>
+  </DockPanel>
+</UserControl>

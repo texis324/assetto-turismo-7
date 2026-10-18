@@ -1,0 +1,389 @@
+<UserControl x:Class="AcManager.Pages.Gt.GtHeader" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gt="clr-namespace:AcManager.Pages.Gt"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="1600" Height="72"
+    UseLayoutRounding="True" SnapsToDevicePixels="True" FontFamily="Yu Gothic UI, Segoe UI">
+  <UserControl.Resources>
+    <!-- Contact, compression, push-off, heel kick and bent-knee recovery; both feet lift during flight. -->
+    <Storyboard x:Key="RunnerCycle" RepeatBehavior="Forever" Duration="0:0:0.72" SpeedRatio="0.75" Timeline.DesiredFrameRate="30">
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerNearThigh" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="-38" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="-7" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="32" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="40" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="-60" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="-65" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="-52" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="-38" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerFarThigh" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="-60" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="-65" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="-52" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="-38" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="-7" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="32" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="40" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="0" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerNearKnee" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="30" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="40" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="30" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="115" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="135" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="125" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="90" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="55" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="30" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerFarKnee" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="135" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="125" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="90" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="55" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="30" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="40" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="30" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="115" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="135" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerNearArm" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="32" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="-22" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="-42" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="-35" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="38" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="45" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="32" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerFarArm" Storyboard.TargetProperty="Angle">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="-35" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="38" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="45" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="32" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="-22" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="-42" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="-35" />
+      </DoubleAnimationUsingKeyFrames>
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunnerBounce" Storyboard.TargetProperty="Y">
+        <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="0.8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.27" Value="-2.2" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.36" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="0.8" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.54" Value="0" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.63" Value="-2.2" />
+        <LinearDoubleKeyFrame KeyTime="0:0:0.72" Value="0" />
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Style x:Key="RunnerLimb" TargetType="Path">
+      <Setter Property="Stroke" Value="#E85820" />
+      <Setter Property="StrokeThickness" Value="3.2" />
+      <Setter Property="StrokeStartLineCap" Value="Round" />
+      <Setter Property="StrokeEndLineCap" Value="Round" />
+      <Setter Property="StrokeLineJoin" Value="Round" />
+    </Style>
+    <!-- GT7 reference: a neutral charcoal highlight falls gently into black. -->
+    <LinearGradientBrush x:Key="HeaderFade" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#202020" Offset="0" />
+      <GradientStop Color="#171717" Offset="0.3" />
+      <GradientStop Color="#0B0B0B" Offset="0.7" />
+      <GradientStop Color="#030303" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="HeaderDivider" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#003F3F3F" Offset="0" />
+      <GradientStop Color="#803F3F3F" Offset="0.18" />
+      <GradientStop Color="#803F3F3F" Offset="0.82" />
+      <GradientStop Color="#003F3F3F" Offset="1" />
+    </LinearGradientBrush>
+    <Style x:Key="Divider" TargetType="Border">
+      <Setter Property="BorderBrush" Value="{StaticResource HeaderDivider}" />
+      <Setter Property="BorderThickness" Value="1 0 0 0" />
+      <Setter Property="Margin" Value="0 11 0 11" />
+    </Style>
+  </UserControl.Resources>
+  <Border Background="{StaticResource HeaderFade}" CornerRadius="18 18 0 0">
+    <!-- Separate columns keep long car/track names clear of the clock and window controls. -->
+    <Grid Margin="12 0 12 0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="56" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="134" />
+        <ColumnDefinition Width="170" />
+        <ColumnDefinition Width="82" />
+        <ColumnDefinition Width="52" />
+      </Grid.ColumnDefinitions>
+      <Button x:Name="LogoButton" gt:GtSfx.HandlesClickSound="True" Width="48" Height="54" HorizontalAlignment="Left" VerticalAlignment="Center"
+          Background="Transparent" Cursor="Hand" ToolTip="メニュー" AutomationProperties.Name="メニュー"
+          WindowChrome.IsHitTestVisibleInChrome="True"
+          Click="OnLogoClick">
+        <Button.Template>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="HitArea" Background="{TemplateBinding Background}" CornerRadius="24">
+              <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="HitArea" Property="Opacity" Value="0.82" /></Trigger>
+              <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="HitArea" Property="Background" Value="#30FFFFFF" /></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Button.Template>
+        <Button.ContextMenu>
+          <ContextMenu x:Name="HeaderMenu" Placement="Bottom" VerticalOffset="9" MinWidth="216"
+              Background="#F0F0EE" Foreground="#252525" BorderBrush="#787878" BorderThickness="1" Padding="5"
+              FontFamily="Yu Gothic UI, Segoe UI" FontSize="15" Opened="OnHeaderMenuOpened" Closed="OnHeaderMenuClosed">
+            <ContextMenu.Template>
+              <ControlTemplate TargetType="ContextMenu">
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" CornerRadius="6">
+                  <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                </Border>
+              </ControlTemplate>
+            </ContextMenu.Template>
+            <ContextMenu.Resources>
+              <Style TargetType="MenuItem">
+                <Setter Property="Foreground" Value="#252525" />
+                <Setter Property="Padding" Value="14 11" />
+                <Setter Property="Template">
+                  <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                      <Border x:Name="MenuRow" Background="Transparent" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                        <Grid>
+                          <Grid.ColumnDefinitions><ColumnDefinition Width="28" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                          <ContentPresenter ContentSource="Icon" VerticalAlignment="Center" />
+                          <ContentPresenter Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center" />
+                        </Grid>
+                      </Border>
+                      <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True"><Setter TargetName="MenuRow" Property="Background" Value="#D7D7D4" /></Trigger>
+                      </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </ContextMenu.Resources>
+            <MenuItem x:Name="SettingsMenuItem" gt:GtSfx.HandlesClickSound="True" Header="設定" Click="OnSettingsClick">
+              <MenuItem.Icon><TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="17" /></MenuItem.Icon>
+            </MenuItem>
+          </ContextMenu>
+        </Button.ContextMenu>
+      <Border Width="42" Height="42" CornerRadius="21" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Border.Background>
+          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#D0D2D1" Offset="0" />
+            <GradientStop Color="#909392" Offset="1" />
+          </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+          <Image x:Name="LogoImg" Visibility="Collapsed" />
+          <Rectangle Width="31" Height="31" Fill="#353837">
+            <Rectangle.OpacityMask>
+              <ImageBrush ImageSource="{Binding Source, ElementName=LogoImg}" Stretch="Uniform" />
+            </Rectangle.OpacityMask>
+          </Rectangle>
+        </Grid>
+      </Border>
+      </Button>
+
+      <Border Grid.Column="1" Style="{StaticResource Divider}">
+        <!-- The live overlay player keeps all its original controls and handlers. -->
+        <Grid Margin="18 0 18 0" HorizontalAlignment="Right" VerticalAlignment="Center">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Border Grid.Column="1" Width="39" Height="39" CornerRadius="20" Margin="12 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False">
+            <Border.Background>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0.7,1">
+                <GradientStop Color="#854677" Offset="0" />
+                <GradientStop Color="#343B79" Offset="0.65" />
+                <GradientStop Color="#41869A" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock Text="&#x266B;" FontFamily="Segoe UI Symbol" FontSize="25" Foreground="#EEEEF4"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -2 0 0" />
+          </Border>
+          <Viewbox Grid.Column="0" Stretch="Uniform" StretchDirection="DownOnly" VerticalAlignment="Center">
+            <StackPanel x:Name="BgmHost" Orientation="Horizontal" VerticalAlignment="Center" />
+          </Viewbox>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="2" Style="{StaticResource Divider}" Padding="12 0 14 0">
+        <Grid VerticalAlignment="Center">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MaxWidth="250" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Image x:Name="CarPreview" Width="104" Height="48" Margin="0 0 12 0" VerticalAlignment="Center"
+              Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality">
+            <Image.OpacityMask>
+              <RadialGradientBrush RadiusX="0.6" RadiusY="0.7">
+                <GradientStop Color="#FFFFFFFF" Offset="0" />
+                <GradientStop Color="#FFFFFFFF" Offset="0.55" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+              </RadialGradientBrush>
+            </Image.OpacityMask>
+          </Image>
+          <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0 0 12 0">
+            <TextBlock x:Name="CarName" FontSize="15" FontWeight="SemiBold" Foreground="#E2E2E2"
+                TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
+            <TextBlock x:Name="CarSpecs" FontSize="11" Foreground="#A4A4A4" Margin="0 2 0 0"
+                TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"
+                FontFamily="Bahnschrift SemiCondensed, Yu Gothic UI" />
+          </StackPanel>
+          <Border x:Name="PpPill" Grid.Column="2" Background="#D4D9D5" CornerRadius="13" Padding="9 3 9 3"
+              VerticalAlignment="Center" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="PP" FontSize="11" FontWeight="SemiBold" Foreground="#292D2A"
+                  VerticalAlignment="Center" Margin="0 0 5 0" />
+              <TextBlock x:Name="PpValue" FontSize="14" FontWeight="Bold" Foreground="#202420"
+                  FontFamily="Bahnschrift SemiCondensed, Yu Gothic UI" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="3" Style="{StaticResource Divider}" Padding="8 0">
+        <CheckBox x:Name="TripleLaunchToggle" Content="画面：自動" IsThreeState="True" IsChecked="{x:Null}" Height="46" VerticalAlignment="Center"
+            Foreground="#B8B8B8" Background="Transparent" BorderBrush="Transparent" FontSize="11.5"
+            Cursor="Hand" Focusable="True" IsTabStop="True" FocusVisualStyle="{x:Null}"
+            AutomationProperties.Name="起動時の画面モード" AutomationProperties.HelpText="自動、1画面、3画面、4画面(3画面＋観戦)を切り替えます。自動はコースイン直前のWindowsの画面構成に合わせます。SpaceまたはEnter、パッドの左右・決定で切替。上で設定メニュー、戻るまたは下で終了。"
+            ToolTip="自動 → 1画面 → 3画面 → 4画面の順に切り替えます。&#x0a;自動：有効な画面が横一列の3画面なら3画面、それ以外はメイン画面で起動。PC側の画面構成は変更しません。&#x0a;3画面を指定：従来どおり3台を有効にして起動。&#x0a;4画面：3画面＋ギガクリスタにTVカメラ(観戦用)。選んで約1.5秒で4台を先に点灯し(モニタの復帰待ちを無くすため)、別のモードに変えるかCM7を閉じると元に戻します。&#x0a;Space / Enter、パッドの左右・決定で切替。次のコースインから適用します。"
+            WindowChrome.IsHitTestVisibleInChrome="True" gt:GtSfx.HandlesClickSound="True"
+            Click="OnTripleLaunchClick">
+          <CheckBox.Template>
+            <ControlTemplate TargetType="CheckBox">
+              <Border x:Name="ToggleSurface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="1" CornerRadius="5" Padding="6 3">
+                <StackPanel VerticalAlignment="Center">
+                  <ContentPresenter HorizontalAlignment="Center" />
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 4 0 0">
+                    <Border x:Name="SwitchRail" Width="34" Height="16" CornerRadius="8" Background="#414141">
+                      <Ellipse x:Name="SwitchThumb" Width="10" Height="10" HorizontalAlignment="Left" Margin="3 0" Fill="#C8C8C8" />
+                    </Border>
+                    <TextBlock x:Name="SwitchState" Text="1" Width="32" Margin="7 0 0 0" FontSize="11" FontWeight="SemiBold"
+                        Foreground="#A4A4A4" FontFamily="Bahnschrift SemiCondensed, Yu Gothic UI" VerticalAlignment="Center" />
+                  </StackPanel>
+                </StackPanel>
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                  <Setter TargetName="SwitchRail" Property="Background" Value="#507C70" />
+                  <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Right" />
+                  <Setter TargetName="SwitchThumb" Property="Fill" Value="#F3F7F5" />
+                  <Setter TargetName="SwitchState" Property="Text" Value="3" />
+                  <Setter TargetName="SwitchState" Property="Foreground" Value="#B8DCD0" />
+                </Trigger>
+                <!-- [fork] 4画面(観戦): IsChecked=True の上に Tag="spectator" で上書き（後勝ち） -->
+                <Trigger Property="Tag" Value="spectator">
+                  <Setter TargetName="SwitchRail" Property="Background" Value="#7E5A33" />
+                  <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Right" />
+                  <Setter TargetName="SwitchThumb" Property="Fill" Value="#FFD9A0" />
+                  <Setter TargetName="SwitchState" Property="Text" Value="3+1" />
+                  <Setter TargetName="SwitchState" Property="Foreground" Value="#FFD9A0" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="{x:Null}">
+                  <Setter TargetName="SwitchRail" Property="Background" Value="#665C40" />
+                  <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Center" />
+                  <Setter TargetName="SwitchThumb" Property="Fill" Value="#E1CF9F" />
+                  <Setter TargetName="SwitchState" Property="Text" Value="AUTO" />
+                  <Setter TargetName="SwitchState" Property="Foreground" Value="#E1CF9F" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter TargetName="ToggleSurface" Property="Background" Value="#16FFFFFF" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                  <Setter TargetName="ToggleSurface" Property="BorderBrush" Value="#BAC8C4" />
+                  <Setter TargetName="ToggleSurface" Property="Background" Value="#20FFFFFF" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                  <Setter TargetName="ToggleSurface" Property="Opacity" Value="0.75" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                  <Setter TargetName="ToggleSurface" Property="Opacity" Value="0.4" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </CheckBox.Template>
+        </CheckBox>
+      </Border>
+
+      <Border Grid.Column="4" Style="{StaticResource Divider}" Padding="14 0 12 0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="デイリーワークアウト" FontSize="10.5" Foreground="#929292" />
+            <TextBlock Margin="0 2 0 0">
+              <Run x:Name="WorkoutKm" Text="0.0" FontSize="17" FontWeight="SemiBold" Foreground="#DCDCDC"
+                  FontFamily="Bahnschrift SemiCondensed, Yu Gothic UI" /><Run Text=" km" FontSize="11" Foreground="#A0A0A0" />
+            </TextBlock>
+          </StackPanel>
+          <Viewbox x:Name="WorkoutRunner" Width="26" Height="34" Margin="10 0 0 0"
+              VerticalAlignment="Center" IsHitTestVisible="False">
+            <Canvas Width="34" Height="44">
+              <Canvas>
+                <Canvas.RenderTransform><TranslateTransform x:Name="RunnerBounce" /></Canvas.RenderTransform>
+                <!-- Far limbs are darker, so the opposing stride remains legible at icon size. -->
+                <Canvas Canvas.Left="14.2" Canvas.Top="13" Opacity="0.65">
+                  <Canvas.RenderTransform><RotateTransform x:Name="RunnerFarArm" Angle="-35" /></Canvas.RenderTransform>
+                  <Path Data="M 0,0 L 0,7" Style="{StaticResource RunnerLimb}" />
+                  <Path Data="M 0,0 L 0,6" Canvas.Top="7" Style="{StaticResource RunnerLimb}">
+                    <Path.RenderTransform><RotateTransform Angle="-100" /></Path.RenderTransform>
+                  </Path>
+                </Canvas>
+                <Canvas Canvas.Left="13" Canvas.Top="23" Opacity="0.65">
+                  <Canvas.RenderTransform><RotateTransform x:Name="RunnerFarThigh" Angle="0" /></Canvas.RenderTransform>
+                  <Path Data="M 0,0 L 0,8" Style="{StaticResource RunnerLimb}" />
+                  <Path Data="M 0,0 L 0,8 L 3,8" Canvas.Top="8" Style="{StaticResource RunnerLimb}">
+                    <Path.RenderTransform><RotateTransform x:Name="RunnerFarKnee" Angle="135" /></Path.RenderTransform>
+                  </Path>
+                </Canvas>
+                <Path Data="M 14.2,13 L 13.6,18 L 13,23" StrokeThickness="4.5" Style="{StaticResource RunnerLimb}" />
+                <Ellipse Canvas.Left="11.6" Canvas.Top="3" Width="6.6" Height="6.6" Fill="#E85820" />
+                <Canvas Canvas.Left="13" Canvas.Top="23">
+                  <Canvas.RenderTransform><RotateTransform x:Name="RunnerNearThigh" Angle="-38" /></Canvas.RenderTransform>
+                  <Path Data="M 0,0 L 0,8" Style="{StaticResource RunnerLimb}" />
+                  <Path Data="M 0,0 L 0,8 L 3,8" Canvas.Top="8" Style="{StaticResource RunnerLimb}">
+                    <Path.RenderTransform><RotateTransform x:Name="RunnerNearKnee" Angle="30" /></Path.RenderTransform>
+                  </Path>
+                </Canvas>
+                <Canvas Canvas.Left="14.2" Canvas.Top="13">
+                  <Canvas.RenderTransform><RotateTransform x:Name="RunnerNearArm" Angle="32" /></Canvas.RenderTransform>
+                  <Path Data="M 0,0 L 0,7" Style="{StaticResource RunnerLimb}" />
+                  <Path Data="M 0,0 L 0,6" Canvas.Top="7" Style="{StaticResource RunnerLimb}">
+                    <Path.RenderTransform><RotateTransform Angle="-100" /></Path.RenderTransform>
+                  </Path>
+                </Canvas>
+              </Canvas>
+            </Canvas>
+          </Viewbox>
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="5" Style="{StaticResource Divider}" Padding="10 0 10 0">
+        <StackPanel VerticalAlignment="Center">
+          <TextBlock x:Name="ClockTime" FontSize="23" FontWeight="SemiBold" Foreground="#DEDEDE" HorizontalAlignment="Right"
+              FontFamily="Bahnschrift SemiCondensed, Yu Gothic UI" />
+          <TextBlock x:Name="ClockDate" FontSize="10.5" Foreground="#929292" HorizontalAlignment="Right" Margin="0 1 0 0" />
+        </StackPanel>
+      </Border>
+      <StackPanel Grid.Column="6" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <TextBlock x:Name="BtnMin" Text="─" FontSize="13" Foreground="#55575E" Padding="7 12 7 12"
+            Cursor="Hand" ToolTip="最小化" MouseLeftButtonUp="OnMinClick" />
+        <TextBlock x:Name="BtnClose" Text="✕" FontSize="13" Foreground="#55575E" Padding="7 12 3 12"
+            Cursor="Hand" ToolTip="閉じる" MouseLeftButtonUp="OnCloseClick" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>
+

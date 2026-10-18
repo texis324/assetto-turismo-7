@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <!-- There is also a custom packer made for this app, that’s why there is an option. -->
+    <!-- There is also a custom packer made for this app, that窶冱 why there is an option. -->
     <UseCosturaToPack>false</UseCosturaToPack>
     <IncludeWorkshop>false</IncludeWorkshop>
     <PublishUrl>publish\</PublishUrl>
@@ -36,7 +36,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AcManager</RootNamespace>
     <AssemblyName>Content Manager</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>e5b75b59</NuGetPackageImportStamp>
@@ -200,6 +200,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net" />
@@ -1817,6 +1818,62 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\Gt\GtLoadingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\GtOpeningWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\GtHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\GtSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\SettingSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\TuningShop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\BrandCentral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\CourseEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\RegionMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\WorldCircuits.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\GarageCarPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\Gallery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\TitleScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Gt\WorldMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\About\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1853,6 +1910,81 @@
     </Compile>
     <Compile Include="Pages\Settings\SettingsGeneral.xaml.cs">
       <DependentUpon>SettingsGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GtChrome.cs" />
+    <Compile Include="Pages\Gt\GtDisplayMode.cs" />
+    <Compile Include="Pages\Gt\GtDisplayTopology.cs" />
+    <Compile Include="Pages\Gt\GtUniversalInput.cs" />
+    <Compile Include="Pages\Gt\GtNativeMenuInput.cs" />
+    <Compile Include="Pages\Gt\GtDrivingInput.cs" />
+    <Compile Include="Pages\Gt\GtSfx.cs" />
+    <Compile Include="Pages\Gt\GtBorderless.cs" />
+    <Compile Include="Pages\Gt\GtOpening.cs" />
+    <Compile Include="Pages\Gt\GtVolumeCurve.cs" />
+    <Compile Include="Pages\Gt\GtMasterVolume.cs" />
+    <Compile Include="Pages\Gt\GtNav.cs" />
+    <Compile Include="Pages\Gt\GtHints.cs" />
+    <Compile Include="Pages\Gt\GtStartPoints.cs" />
+    <Compile Include="Pages\Gt\GtPad.cs" />
+    <Compile Include="Pages\Gt\GtRecords.cs" />
+    <Compile Include="Pages\Gt\GtNames.cs" />
+    <Compile Include="Pages\Gt\GtMapAmbience.cs" />
+    <Compile Include="Pages\Gt\GtViewLaunch.cs" />
+    <Compile Include="Pages\Gt\GtFocus.cs" />
+    <Compile Include="Pages\Gt\GtTestChannel.cs" />
+    <Compile Include="Pages\Gt\GtIdleSlides.cs" />
+    <Compile Include="Pages\Gt\GtGameUi.cs" />
+    <Compile Include="Pages\Gt\GtDriveConditions.cs" />
+    <Compile Include="Pages\Gt\GarageMode.cs" />
+    <Compile Include="Pages\Gt\GtTuning.cs" />
+    <Compile Include="Pages\Gt\GtGarage.cs" />
+    <Compile Include="Pages\Gt\GtCarThumbnail.cs" />
+    <Compile Include="Pages\Gt\BrandCentral.xaml.cs">
+      <DependentUpon>BrandCentral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\TuningShop.xaml.cs">
+      <DependentUpon>TuningShop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\SettingSheet.xaml.cs">
+      <DependentUpon>SettingSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GtHeader.xaml.cs">
+      <DependentUpon>GtHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GtKeyboardSettings.cs" />
+    <Compile Include="Pages\Gt\GtControllerBindingsSettings.cs" />
+    <Compile Include="Pages\Gt\GtControllerBindingsPanel.cs" />
+    <Compile Include="Pages\Gt\GtInGameSettings.cs" />
+    <Compile Include="Pages\Gt\GtHeaderBridge.cs" />
+    <Compile Include="Pages\Gt\GtSettings.xaml.cs">
+      <DependentUpon>GtSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GtLoadingWindow.xaml.cs">
+      <DependentUpon>GtLoadingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GtOpeningWindow.xaml.cs">
+      <DependentUpon>GtOpeningWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\CourseEntry.xaml.cs">
+      <DependentUpon>CourseEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\RegionMap.xaml.cs">
+      <DependentUpon>RegionMap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\WorldCircuits.xaml.cs">
+      <DependentUpon>WorldCircuits.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\GarageCarPicker.xaml.cs">
+      <DependentUpon>GarageCarPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\Gallery.xaml.cs">
+      <DependentUpon>Gallery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\TitleScreen.xaml.cs">
+      <DependentUpon>TitleScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Gt\WorldMap.xaml.cs">
+      <DependentUpon>WorldMap.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\About\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -1933,6 +2065,7 @@
     <Content Include="About\Licenses\WpfNotifyIcon\WpfNotifyIcon.txt" />
     <Content Include="Assets\Data\DefaultTrajectories.json" />
     <Page Include="Pages\AcSettings\AcSettingsPython_detailed.xaml" />
+    <Resource Include="Assets\GtTitle\background.png" />
     <Resource Include="Assets\Img\AppOff.png" />
     <Resource Include="Assets\Img\AppOn.png" />
     <None Include="About\Filtering\More About Expressions.txt" />
@@ -2310,7 +2443,7 @@
     <Resource Include="Assets\Data\SrsStyle.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="About\ImportantTips\Custom Weather’s Clouds.txt" />
+    <None Include="About\ImportantTips\Custom Weather窶冱 Clouds.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\TrayIcon.ico" />

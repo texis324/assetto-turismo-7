@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="AcManager.Pages.Gt.WorldMap" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mui="http://firstfloorsoftware.com/ModernUI" xmlns:gt="clr-namespace:AcManager.Pages.Gt"
+    mc:Ignorable="d" Loaded="OnLoaded" Unloaded="OnUnloaded" FocusVisualStyle="{x:Null}" x:Name="This" Focusable="True"
+    PreviewKeyDown="OnPreviewKeyDown" FontFamily="Yu Gothic UI, Segoe UI">
+  <UserControl.Resources>
+    <SolidColorBrush x:Key="GtGold" Color="#D4B474" />
+    <SolidColorBrush x:Key="GtIvory" Color="#E8E6E1" />
+    <SolidColorBrush x:Key="GtGraphite" Color="#0F1216" />
+    <SolidColorBrush x:Key="GtCard" Color="#CC0F1216" />
+    <FontFamily x:Key="GtHead">Bahnschrift Light SemiCondensed, Yu Gothic UI Light</FontFamily>
+    <FontFamily x:Key="GtNum">Bahnschrift SemiCondensed, Yu Gothic UI</FontFamily>
+    <DropShadowEffect x:Key="GtTextShadow" BlurRadius="6" ShadowDepth="1" Opacity="0.8" Color="#000000" />
+  </UserControl.Resources>
+
+  <!-- 全体: GT7共通ヘッダー + 地図(ビューボックスで16:9を画面いっぱいに) + 固定サイズのUI層 -->
+  <DockPanel>
+  <gt:GtHeader x:Name="Header" DockPanel.Dock="Top" />
+  <Grid x:Name="Root" Background="#7FB8C8" ClipToBounds="True">
+
+    <!-- 地図層: 1920×1072 の論理キャンバス。昼絵の上に朝・夕・夜絵を重ね、実時間でクロスフェード。施設ノードはコードで置く -->
+    <Viewbox Stretch="UniformToFill" StretchDirection="Both">
+      <Canvas x:Name="MapCanvas" Width="1920" Height="1072">
+        <!-- [fork] 4 枚の絵をまとめる枠。海の演出(GtMapAmbience の WorldMapWaterEffect)はこの枠にだけ掛かる＝ノードや車の点はゆがまない。
+             中の MapImages は BitmapCache（毎フレーム 4 枚を描き直さない） -->
+        <Grid x:Name="MapLayers" Width="1920" Height="1072">
+          <Grid x:Name="MapImages">
+            <Grid.CacheMode>
+              <BitmapCache RenderAtScale="1" SnapsToDevicePixels="False" />
+            </Grid.CacheMode>
+            <Image x:Name="MapImage" Width="1920" Height="1072" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" />
+            <Image x:Name="DawnImage" Width="1920" Height="1072" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0" />
+            <Image x:Name="DuskImage" Width="1920" Height="1072" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0" />
+            <Image x:Name="NightImage" Width="1920" Height="1072" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0" />
+          </Grid>
+        </Grid>
+      </Canvas>
+    </Viewbox>
+
+    <!-- 上端の薄い暗幕(GT7ヘッダー搭載で不要に。要素はレイアウト互換のため残置) -->
+    <Rectangle Visibility="Collapsed" VerticalAlignment="Top" Height="120" IsHitTestVisible="False">
+      <Rectangle.Fill>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#800F1216" Offset="0" />
+          <GradientStop Color="#000F1216" Offset="1" />
+        </LinearGradientBrush>
+      </Rectangle.Fill>
+    </Rectangle>
+
+    <!-- 左上: ドライバー＆現在の車カード（GT7ヘッダーに役割を移譲＝非表示。要素はコード互換のため残置） -->
+    <Border Visibility="Collapsed" x:Name="DriverCard" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28 22 0 0" Background="{StaticResource GtCard}"
+        BorderBrush="{StaticResource GtGold}" BorderThickness="3 0 0 0" Padding="16 12 18 12" CornerRadius="0 3 3 0" MinWidth="300" Cursor="Hand"
+        MouseLeftButtonUp="OnDriverCardClick" ToolTip="クリックでドライブ画面へ">
+      <DockPanel>
+        <Image x:Name="BrandBadge" DockPanel.Dock="Left" Width="40" Height="40" Margin="0 0 14 0" VerticalAlignment="Top"
+            RenderOptions.BitmapScalingMode="HighQuality" />
+        <StackPanel>
+          <TextBlock x:Name="DriverName" FontFamily="{StaticResource GtNum}" FontSize="12" Foreground="{StaticResource GtGold}" Text="DRIVER" />
+          <TextBlock x:Name="CarName" FontFamily="{StaticResource GtHead}" FontSize="26" Foreground="{StaticResource GtIvory}" Margin="0 -2 0 0"
+              TextTrimming="CharacterEllipsis" MaxWidth="360" Text="—" />
+          <Border Margin="0 8 0 0" CornerRadius="2" ClipToBounds="True" HorizontalAlignment="Left" Background="#40000000">
+            <Image x:Name="CarPreview" Width="220" Height="124" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+          </Border>
+          <TextBlock x:Name="CarMeta" FontFamily="{StaticResource GtNum}" FontSize="11" Foreground="{StaticResource GtGold}" Opacity="0.85"
+              Margin="0 6 0 0" Text="" />
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <!-- 右上: BGM受けと時計はGT7ヘッダーへ移譲（要素はコード互換のため残置・非表示） -->
+    <StackPanel Visibility="Collapsed" x:Name="BgmHost" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 26 210 0" />
+    <StackPanel Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 22 32 0" IsHitTestVisible="False">
+      <TextBlock x:Name="ClockText" FontFamily="{StaticResource GtNum}" FontSize="30" Foreground="{StaticResource GtIvory}" HorizontalAlignment="Right"
+          Effect="{StaticResource GtTextShadow}" Text="00:00" />
+      <TextBlock x:Name="DateText" FontFamily="{StaticResource GtNum}" FontSize="12" Foreground="{StaticResource GtGold}" HorizontalAlignment="Right"
+          Effect="{StaticResource GtTextShadow}" Text="" />
+      <TextBlock x:Name="TimeModeText" FontFamily="{StaticResource GtNum}" FontSize="10" Foreground="{StaticResource GtIvory}" Opacity="0.6"
+          HorizontalAlignment="Right" Margin="0 4 0 0" Effect="{StaticResource GtTextShadow}" Text="" />
+    </StackPanel>
+
+    <!-- 下端: ホームバー -->
+    <Border VerticalAlignment="Bottom" Height="64" IsHitTestVisible="False">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="#000F1216" Offset="0" />
+          <GradientStop Color="#C00F1216" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+    </Border>
+    <StackPanel x:Name="BottomBar" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 14" />
+    <TextBlock x:Name="HintText" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 32 22" FontFamily="{StaticResource GtNum}"
+        FontSize="11" Foreground="{StaticResource GtGold}" Opacity="0.8" Effect="{StaticResource GtTextShadow}" Text="施設を選んでください" />
+
+    <!-- [fork] 納車（ブランドセントラルで「ガレージに入れる」→ ワールドマップに戻った時に届く。GT7 の納車演出・2026-09-06） -->
+    <Grid x:Name="DeliveryOverlay" Visibility="Collapsed" Background="#A6000000">
+      <Border Width="720" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#1E1F24" CornerRadius="10" BorderBrush="{StaticResource GtGold}" BorderThickness="1">
+        <Border.Effect><DropShadowEffect BlurRadius="34" ShadowDepth="6" Opacity="0.7" /></Border.Effect>
+        <StackPanel Margin="34 24 34 24">
+          <TextBlock Text="新しいクルマがガレージに届きました" FontSize="20" FontWeight="SemiBold" Foreground="#F0F0F0" HorizontalAlignment="Center" />
+          <TextBlock x:Name="DeliveryCount" FontFamily="{StaticResource GtNum}" FontSize="11.5" Foreground="{StaticResource GtGold}" HorizontalAlignment="Center" Margin="0 4 0 0" />
+          <Grid Height="300" Margin="0 14 0 0">
+            <Grid.Background>
+              <RadialGradientBrush Center="0.5,0.45" GradientOrigin="0.5,0.45" RadiusX="0.7" RadiusY="0.8">
+                <GradientStop Color="#3E3F45" Offset="0" />
+                <GradientStop Color="#1E1F24" Offset="1" />
+              </RadialGradientBrush>
+            </Grid.Background>
+            <Image x:Name="DeliveryImg" Stretch="Uniform" Margin="30 10 30 18" RenderOptions.BitmapScalingMode="HighQuality" />
+          </Grid>
+          <TextBlock x:Name="DeliveryBrand" FontFamily="{StaticResource GtNum}" FontSize="11.5" Foreground="{StaticResource GtGold}" HorizontalAlignment="Center" Margin="0 12 0 0" />
+          <TextBlock x:Name="DeliveryName" FontSize="19" FontWeight="SemiBold" Foreground="#F0F0F0" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+            <Border x:Name="DeliveryLater" CornerRadius="22" BorderBrush="#9A9AA0" BorderThickness="1.5" Padding="40 8 40 10" Margin="0 0 14 0" Cursor="Hand" Background="Transparent">
+              <TextBlock Text="あとで" FontSize="14" Foreground="#F0F0F0" />
+            </Border>
+            <Border x:Name="DeliverySwitch" CornerRadius="22" Background="#F2F2F4" BorderBrush="Transparent" BorderThickness="1.5" Padding="40 8 40 10" Cursor="Hand">
+              <TextBlock Text="このクルマに乗り換える" FontSize="14" FontWeight="SemiBold" Foreground="#1A1A1E" />
+            </Border>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Grid>
+  </DockPanel>
+</UserControl>

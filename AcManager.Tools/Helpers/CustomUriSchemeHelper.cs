@@ -6,7 +6,9 @@ using Microsoft.Win32;
 
 namespace AcManager.Tools.Helpers {
     public static class CustomUriSchemeHelper {
-        public static bool OptionRegisterEachTime = true;
+        public static bool OptionRegisterEachTime = false;
+        // [fork] 既定でレジストリに一切触らない（配布版 C:\Games\ContentManager の acmanager:// 登録を奪わない）
+        public static bool OptionRegistrationEnabled = false;
 
         private const string UriSchemeLabel = "acmanager";
         public const string UriScheme = UriSchemeLabel + ":";
@@ -73,6 +75,7 @@ namespace AcManager.Tools.Helpers {
         }
 
         private static void EnsureRegistered() {
+            if (!OptionRegistrationEnabled) return; // [fork]
             if (MainExecutingFile.IsInDevelopment) return;
 
             try {

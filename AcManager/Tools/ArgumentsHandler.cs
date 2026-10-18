@@ -59,7 +59,7 @@ namespace AcManager.Tools {
         }
 
         private static bool OnPaste() {
-            if (VisualExtension.IsInputFocused()) {
+            if (AcManager.Pages.Gt.GtSettings.IsCapturingKey || VisualExtension.IsInputFocused()) {
                 return false;
             }
 
