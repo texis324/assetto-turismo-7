@@ -27,6 +27,8 @@ This is an unofficial fan project. It is not affiliated with or endorsed by Sony
 ## Not included
 Music, sound effects, videos and car photos are not distributed. You can add your own under `Data\Static\gt7\` (e.g. `sfx\ui_select.mp3`, `ui_move.mp3`, `ui_cancel.mp3`). Lap records are saved to `Data\Static\gt7\records`; put a folder path in `records\records_dir.txt` to store them elsewhere.
 
+Course photos: Wikimedia Commons, see CREDITS-images.txt in the release zip. Region maps drawn from Natural Earth (public domain).
+
 ## Build
 Visual Studio 2022 Build Tools with the .NET Framework 4.8 targeting pack, then:
 ```
